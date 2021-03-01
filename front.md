@@ -5,6 +5,10 @@ npm i @nuxtjs/axios axios
 npm i -D eslint eslint-plugin-vue
 npm i lodash.throttle
 npm i @nuxtjs/moment
+npm i express
+- aws에서 nuxt start를 못하는 경우가 있어 사용
+npm i cross-env
+- 리눅스에서는 되는데 윈도우에서 node server가 안되서 사용
 
 ---
 
