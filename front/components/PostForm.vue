@@ -31,10 +31,9 @@
             style="display: inline-block"
           >
             <img
-              :src="`http://localhost:3085/${p}`"
+              :src="p"
               :alt="p"
-              style="width:
-            200px"
+              style="width:200px"
             />
             <div>
               <button type="button" @click="onRemoveImage(i)">제거</button>

@@ -1,14 +1,29 @@
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
+const AWS = require('aws-sdk');
+const multerS3 = require('multer-s3');
 
 const db = require('../models');
 const { isLoggedIn } = require('./middleware');
 
 const router = express.Router();
 
+AWS.config.update({
+  region: 'ap-northeast-2',
+  accessKeyId: process.env.S3_ACCESS_KEY_ID,
+  secretAccessKey: process.env.S3_SERCET_ACCESS_KEY,
+})
+
 const upload = multer({
-  storage: multer.diskStorage({
+  storage: multerSe({
+    s3: new AWS.S3(),
+    bucket: 'vue-nodebird',
+    key(req, file, cb) {
+      cb(null, `original/${Date.now()}${path.basename(file.originalname)}`)
+    }
+  }),
+  /* storage: multer.diskStorage({
     destination(req, file, done) {
       done(null, 'uploads');
     },
@@ -17,12 +32,13 @@ const upload = multer({
       const basename = path.basename(file.originalname, ext);
       done(null, basename + Date.now() + ext);
     },
-  }),
+  }), */
   limit: { fileSize: 20 * 1024 * 1024 },
 });
 
 router.post('/images', isLoggedIn, upload.array('image'), (req, res) => {
-  res.json(req.files.map((v) => v.filename));
+  res.json(req.files.map((v) => v.location));
+  // res.json(req.files.map((v) => v.filename));
 });
 
 router.post('/', isLoggedIn, async (req, res) => {
