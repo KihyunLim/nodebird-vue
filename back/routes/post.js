@@ -16,7 +16,7 @@ AWS.config.update({
 })
 
 const upload = multer({
-  storage: multerSe({
+  storage: multerS3({
     s3: new AWS.S3(),
     bucket: 'vue-nodebird',
     key(req, file, cb) {
