@@ -11,7 +11,7 @@
             <v-img
               max-height="500"
               contain
-              :src="`http://localhost:3085/${img.src}`"
+              :src="img.src"
             />
           </v-sheet>
         </v-carousel-item>
